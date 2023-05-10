@@ -19,5 +19,5 @@ jobs:
               --access-token "${{ secrets.PERSONAL_GH_TOKEN }}" \
              --aqua-key "${{ secrets.AQUA_KEY }}" \
              --aqua-secret "${{ secrets.AQUA_SECRET }}" \
-             --artifact-path "aquasaemea/insecure-bank-app:${{ github.sha }}"
+             --artifact-path "aqua-thl/insecure-bank-app:${{ github.sha }}"
  
