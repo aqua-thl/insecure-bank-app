@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: "aquasaemea/insecure-bank-app:${{ github.sha }}"
+          tags: "aqua-thl/insecure-bank-app:${{ github.sha }}"
   call-bily-in-local-repo:
     needs: checkout
     uses: ./.github/workflows/billy.yml
