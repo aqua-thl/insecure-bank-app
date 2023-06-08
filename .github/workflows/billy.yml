@@ -22,5 +22,5 @@ jobs:
               --access-token "${{ secrets.PERSONAL_GH_TOKEN }}" \
              --aqua-key "${{ secrets.AQUA_KEY }}" \
              --aqua-secret "${{ secrets.AQUA_SECRET }}" \
-             --artifact-path tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
+             --artifact-path ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
  
