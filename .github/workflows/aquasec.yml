@@ -8,6 +8,10 @@ on:
     branches: 
       - main
       # comment
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   checkout:
     name: Checkout
@@ -23,8 +27,9 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner
         with:
@@ -42,11 +47,12 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: "aquasaemea/insecure-bank-app:${{ github.sha }}"
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
   call-bily-in-local-repo:
     needs: checkout
     uses: ./.github/workflows/billy.yml
     secrets:
       inherit
+
   call-workflow-2-in-local-repo:
     uses: ./.github/workflows/post-publish.yml
