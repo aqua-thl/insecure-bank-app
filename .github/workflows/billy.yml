@@ -4,7 +4,9 @@ name: Billy Workflow
 
 on:
   workflow_call:
-
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 jobs:
   post_publish:
     runs-on: ubuntu-latest

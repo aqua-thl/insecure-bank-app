@@ -53,5 +53,6 @@ jobs:
     uses: ./.github/workflows/billy.yml
     secrets:
       inherit
+
   call-workflow-2-in-local-repo:
     uses: ./.github/workflows/post-publish.yml
