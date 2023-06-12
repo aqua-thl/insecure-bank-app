@@ -48,11 +48,23 @@ jobs:
         with:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
-  call-bily-in-local-repo:
+  aqua-billy:
     needs: checkout
-    uses: ./.github/workflows/billy.yml
-    secrets:
-      inherit
+    uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
+    secrets: 
+      AQUA_KEY: ${{ secrets.AQUA_KEY }}
+      AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+      GH_TOKEN: ${{ secrets.github_token }}
+      DOCKERHUB_USERNAME: ${{github.actor}}
+      DOCKERHUB_TOKEN: ${{secrets.github_token}}
+    with:      
+      ARTIFACT_PATH: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}"
+
+#   call-bily-in-local-repo:
+#     needs: checkout
+#     uses: ./.github/workflows/billy.yml
+#     secrets:
+#       inherit
 
   call-workflow-2-in-local-repo:
     uses: ./.github/workflows/post-publish.yml
