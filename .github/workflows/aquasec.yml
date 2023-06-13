@@ -9,7 +9,7 @@ on:
       - main
       # comment
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: thlaqua
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -47,9 +47,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
     outputs:
-      image_repo: ${{ env.IMAGE_NAME }}
+      image_repo: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
   aqua-billy:
     needs: checkout
     uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
