@@ -47,7 +47,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    outputs:
+      image_repo: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
   aqua-billy:
     needs: checkout
     uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
@@ -58,7 +60,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{github.actor}}
       DOCKERHUB_TOKEN: ${{secrets.github_token}}
     with:      
-      ARTIFACT_PATH: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}"
+      ARTIFACT_PATH: "${{ needs.checkout.outputs.image_repo }}"
 
 #   call-bily-in-local-repo:
 #     needs: checkout
