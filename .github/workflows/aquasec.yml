@@ -50,7 +50,7 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
     outputs:
-      image_repo: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      image_repo: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
   test:
     needs: checkout
     runs-on: ubuntu-latest
