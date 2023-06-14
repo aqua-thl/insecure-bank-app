@@ -9,8 +9,9 @@ on:
       - main
       # comment
 env:
-  REGISTRY: thlaqua
-  IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: thlaquasec
+  IMAGE_NAME: insecure-bank-app 
+  # ${{ github.repository }}
 
 jobs:
   checkout:
