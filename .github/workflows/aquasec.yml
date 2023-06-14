@@ -51,6 +51,14 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
     outputs:
       image_repo: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+  test:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        run: |
+          echo "${{ needs.checkout.outputs.image_repo }}"
+
   aqua-billy:
     needs: checkout
     uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
