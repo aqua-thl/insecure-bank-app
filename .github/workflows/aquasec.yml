@@ -68,7 +68,7 @@ jobs:
             --aqua-key "${{ secrets.AQUA_KEY }}" \
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --artifact-path "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
-      outputs:
+    outputs:
       image_repo: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
   test:
     needs: checkout
