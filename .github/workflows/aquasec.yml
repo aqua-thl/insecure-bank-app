@@ -52,7 +52,23 @@ jobs:
         with:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-    outputs:
+      - name: Manifest Generation
+        run: |
+          export BILLY_SERVER=https://billy.codesec.aquasec.com
+          curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
+          curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
+          if ! cat install.sh.checksum | sha256sum ; then
+          echo "install.sh checksum failed"
+          exit 1
+          fi
+          BINDIR="." sh install.sh
+          rm install.sh install.sh.checksum
+          ./billy generate \
+            --access-token "${{ secrets.GH_TOKEN }}" \
+            --aqua-key "${{ secrets.AQUA_KEY }}" \
+            --aqua-secret "${{ secrets.AQUA_SECRET }}" \
+            --artifact-path "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+      outputs:
       image_repo: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
   test:
     needs: checkout
@@ -62,17 +78,17 @@ jobs:
         run: |
           echo "${{ needs.checkout.outputs.image_repo }}"
 
-  aqua-billy:
-    needs: checkout
-    uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
-    secrets: 
-      AQUA_KEY: ${{ secrets.AQUA_KEY }}
-      AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
-      GH_TOKEN: ${{ secrets.github_token }}
-      DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
-      DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
-    with:      
-      ARTIFACT_PATH: "thlaquasec/insecure-bank-app"
+  # aqua-billy:
+  #   needs: checkout
+  #   uses: argon-gh-demo/github-workflows/.github/workflows/billy-ubuntu.yml@main
+  #   secrets: 
+  #     AQUA_KEY: ${{ secrets.AQUA_KEY }}
+  #     AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+  #     GH_TOKEN: ${{ secrets.github_token }}
+  #     DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+  #     DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
+  #   with:      
+  #     ARTIFACT_PATH: "thlaquasec/insecure-bank-app"
 
 #   call-bily-in-local-repo:
 #     needs: checkout
