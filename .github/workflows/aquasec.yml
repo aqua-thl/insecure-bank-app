@@ -9,17 +9,13 @@ on:
       - main
       # comment
 env:
-  REGISTRY: thlaquasec
-  IMAGE_NAME: insecure-bank-app 
-  # ${{ github.repository }}
-
-jobs:
-  checkout:
-    env:
       # REGISTRY: thlaquasec
       # IMAGE_NAME: insecure-bank-app 
       REGISTRY: ghcr.io
-      IMAGE_NAME: insecure-bank-app 
+      IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  checkout:
     name: Checkout
     runs-on: ubuntu-latest
     steps:
