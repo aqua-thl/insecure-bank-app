@@ -57,6 +57,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: checkout
     steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Manifest Generation
         run: |
           export BILLY_SERVER=https://billy.codesec.aquasec.com
@@ -82,6 +88,21 @@ jobs:
       - name: Debug
         run: |
           echo "${{ needs.checkout.outputs.image_repo }}"
+
+  # aqua-billy:
+  #   needs: checkout
+  #   uses: poggenpower/github-workflows/.github/workflows/billy-ubuntu.yml@main
+  #   secrets: 
+  #     AQUA_KEY: ${{ secrets.AQUA_KEY }}
+  #     AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+  #     GH_TOKEN: ${{ secrets.github_token }}
+  #     DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+  #     DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
+  #   with:      
+  #     ARTIFACT_PATH: "aqua-thl/insecure-bank-app:c8561442b69ec00fb86d917a21224972c2c0ab05"
+  #     REGISTRY_NAME: "ghcr.io"
+
+
 
   # aqua-billy:
   #   needs: checkout
