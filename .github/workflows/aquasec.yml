@@ -18,7 +18,7 @@ jobs:
     env:
       # REGISTRY: thlaquasec
       # IMAGE_NAME: insecure-bank-app 
-      REGISTRY: ghcr
+      REGISTRY: ghcr.io
       IMAGE_NAME: insecure-bank-app 
     name: Checkout
     runs-on: ubuntu-latest
