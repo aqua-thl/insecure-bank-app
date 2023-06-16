@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}
   Billy:
     name: Billy
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
             --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
-            --artifact-path "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+            --artifact-path "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}"
     outputs:
       image_repo: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
   test:
@@ -99,7 +99,7 @@ jobs:
   #     DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
   #     DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
   #   with:      
-  #     ARTIFACT_PATH: "aqua-thl/insecure-bank-app:c8561442b69ec00fb86d917a21224972c2c0ab05"
+  #     ARTIFACT_PATH: "aqua-thl/insecure-bank-app:${{ github.run_number }}"
   #     REGISTRY_NAME: "ghcr.io"
 
 
