@@ -52,6 +52,11 @@ jobs:
         with:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+  Billy:
+    name: Billy
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
       - name: Manifest Generation
         run: |
           export BILLY_SERVER=https://billy.codesec.aquasec.com
@@ -64,7 +69,7 @@ jobs:
           BINDIR="." sh install.sh
           rm install.sh install.sh.checksum
           ./billy generate \
-            --access-token "${{ secrets.GH_TOKEN }}" \
+            --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --artifact-path "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
