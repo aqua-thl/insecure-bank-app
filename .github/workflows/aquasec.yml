@@ -65,6 +65,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Manifest Generation
         run: |
+          docker image ls
+          docker pull "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}"
+          docker image ls
           export BILLY_SERVER=https://billy.codesec.aquasec.com
           curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
           curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
