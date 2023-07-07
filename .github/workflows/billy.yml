@@ -24,7 +24,7 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | wc 
           echo "Billy checking ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.run_number }}"
           curl -L download.codesec.aquasec.com/billy/install.sh | sh -x
-          billy generate \
+          billy generate -v \
               --access-token "${{ secrets.GITHUB_TOKEN }}" \
              --aqua-key "${{ secrets.AQUA_KEY }}" \
              --aqua-secret "${{ secrets.AQUA_SECRET }}" \
